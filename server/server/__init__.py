@@ -21,12 +21,12 @@ def create_server(username, password, address=FTP_ADDRESS, port=FTP_PORT, dir=No
     if dir is not None:
         pass
     elif sys.platform == "win32":
-        dir = FTP_DIR["windows"]
+        dir = os.path.join(FTP_DIR["windows"], username)
     else:
-        dir = FTP_DIR["others"]
+        dir = os.path.join(FTP_DIR["others"], username)
 
     if not os.path.exists(os.path.abspath(dir)):
-        os.makedirs(homedir)
+        os.makedirs(dir)
 
     authorizer.add_user(username, authorizer.gen_hashed_passwd(password), dir, perm='elradfmwMT')
     authorizer.add_anonymous(os.getcwd())
